@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    {% comment %} alt : 대체 텍스트 {% endcomment %}
+    <img src="{% static 'images.jpg' %}" alt="img">
+    
+    <h1>게시판</h1>
+
+    <hr>
+        <a href="{% url 'articles:create'%}">글쓰기</a>
+    <hr>
+
+    {% comment %} DTL : for문 {% endcomment %}
+    {% for article in  articles %}
+        {% comment %} {{객체.속성}} {% endcomment %}
+        <p>글 id : {{article.pk}}</p>
+
+        <a href="{% url "articles:detail" article.pk %}">
+            <p>글 제목 : {{article.title}}</p>
+        </a>
+
+        <p>글 내용 : {{article.content}}</p>
+        
+        <form action="{% url 'articles:delete' article.pk %}" method = 'POST'>
+            {% csrf_token %}
+            <input type="submit" value='삭제'>
+        </form>
+    
+
+        {% comment %} <p>글 생성 시간 : {{article.created_at}}</p> {% endcomment %}
+        <hr>
+    {% endfor %}
+
+{% endblock content %}
