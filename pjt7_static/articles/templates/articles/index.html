@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    {% comment %} alt : 대체 텍스트 {% endcomment %}
+    {% comment %} <img src="{% static 'images.jpg' %}" alt="img"> {% endcomment %}
+
+    {% comment %} user는 view.py의 request로 넘어왔다 {% endcomment %}
+    <h3>안녕하세요.{{user.username}}님</h3>
+
+    <h1>게시판</h1>
+
+    {% comment %} GET 요청 {% endcomment %}
+    <a href="{% url "accounts:login" %}">로그인</a>
+
+    {% comment %} POST 요청 {% endcomment %}
+    <form action="{% url "accounts:logout" %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="로그아웃">
+    </form>
+
+    <hr>
+        <a href="{% url 'articles:create'%}">글쓰기</a>
+    <hr>
+
+    {% comment %} DTL : for문 {% endcomment %}
+    {% for article in  articles %}
+        {% comment %} {{객체.속성}} {% endcomment %}
+        <p>글 id : {{article.pk}}</p>
+
+        <a href="{% url "articles:detail" article.pk %}">
+            <p>글 제목 : {{article.title}}</p>
+        </a>
+
+        <p>글 내용 : {{article.content}}</p>
+        
+        <form action="{% url 'articles:delete' article.pk %}" method = 'POST'>
+            {% csrf_token %}
+            <input type="submit" value='삭제'>
+        </form>
+    
+
+        {% comment %} <p>글 생성 시간 : {{article.created_at}}</p> {% endcomment %}
+        <hr>
+    {% endfor %}
+
+{% endblock content %}
