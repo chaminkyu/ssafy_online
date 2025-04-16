@@ -1,0 +1,13 @@
+[
+{
+    "model": "articles.comment",
+    "pk": 1,
+    "fields": {
+        "article": 2,
+        "user": 2,
+        "content": "ㅎㅎㅎ",
+        "created_at": "2025-04-15T03:34:50.859Z",
+        "updated_at": "2025-04-15T03:34:50.859Z"
+    }
+}
+]
